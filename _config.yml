@@ -16,7 +16,7 @@ timezone: Asia/Seoul
 
 title: 킴제리 집 # the main title
 
-tagline: Rust, 컴파일러, 하드웨어를 좋아합니다 # it will display as the sub-title
+tagline: 대학원생 # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   Rust, 컴파일러, 하드웨어, NPU, PIM
@@ -78,7 +78,7 @@ pageviews:
 #     light  - Use the light color scheme
 #     dark   - Use the dark color scheme
 #
-theme_mode: # [light | dark]
+theme_mode: dark # [light | dark]
 
 # The CDN endpoint for images.
 # Notice that once it is assigned, the CDN url
