@@ -1,7 +1,7 @@
 ---
-title: Install Xillinx vivado 2023.2 on Ubuntu 22.04
+title: Install Xillinx vivado 2024.1 on Ubuntu 22.04.4
 author: Gieun Jeong
-date: 2024-06-15 02:00:00 +0900
+date: 2024-06-16 04:00:00 +0900
 categories: [Verilog]
 tags: [Verilog, vivado]
 # pin: true
@@ -22,6 +22,7 @@ I'm going to install Xillinx Vivado 2024.1 on my remote server where OS version 
 
 ## prerequisite
 - If you use Linux, run below commands.
+
 ```bash
 sudo apt-get update
 sudo apt upgrade
@@ -31,6 +32,7 @@ sudo apt-get install -y xauth # For X11 forwarding
 sudo apt install x11-apps # For X11 forwarding
 ```
 - You should verify x11 forwarding parameters. At first, run below command to open `ssh_config`.
+
 ```bash
 vim /etc/ssh/ssh_config
 ```
@@ -40,10 +42,12 @@ ForwardX11 yes
 ForwardX11Trusted yes
 ```
 - Reconnect to remote server with `X` option.
+
 ```bash
 ssh -X username@<server_address>
 ```
 - Check whether X11 forwading is successfully configured by running below command.
+
 ```bash
 xclock
 ```
@@ -55,18 +59,22 @@ The downloaded file name should be `FPGAs_AdaptiveSoCs_Unified_2024.1_0522_2023_
 
 ## Install Vivado on remote server
 - You first need to check your super user password which is required to change to root account. Vivado should be installed under root account.
+
 ```bash
 sudo passwd # configure password for root account
 ```
 - Change to root account.
+
 ```bash
 su
 ```
 - Then you can see below path on your CLI. Which indicates you successfully change to root account!
+
 ```
 root@username:/home/username#
 ```
 - If you enter `ls -alh` command, you can see that there is no execution permission for `FPGAs_AdaptiveSoCs_Unified_2024.1_0522_2023_Lin64.bin` file. We need to provide permission.
+
 ```bash
 # Before providing the permission
 # -rw-r--r--  FPGAs_AdaptiveSoCs_Unified_2024.1_0522_2023_Lin64.bin
@@ -77,21 +85,25 @@ chmod +x FPGAs_AdaptiveSoCs_Unified_2024.1_0522_2023_Lin64.bin
 # -rwxr-xr-x  FPGAs_AdaptiveSoCs_Unified_2024.1_0522_2023_Lin64.bin
 ```
 - I want to install vivado on new directory. I will temporarily log out of the root account, create a new directory, and then proceed. If I make a new directory in root account, the new directory would be possessed to only for the root account. I don't want this.
+
 ```bash
 exit # log out of the root account
 mkdir tools # make a new directory
 su
 ```
 - Create account token and configuration file. Your AMD email is required in progress. I'm going to install in CLI. That's the reason why I generate token and configuration file. If your local OS is Ubuntu, you may not need to below process.
+
 ```bash
 ./FPGAs_AdaptiveSoCs_Unified_2024.1_0522_2023_Lin64.bin -- -b AuthTokengen # token gen
 ./FPGAs_AdaptiveSoCs_Unified_2024.1_0522_2023_Lin64.bin -- -b ConfigGen # config gen
 ```
 - You can edit `config.txt` file. You may choose which tools to install. Go to configuration file and edit if needed.
+
 ```bash
 vim /root/.Xilinx/install_config.txt
 ```
 - All configurations are done. Run below command to start installing.
+
 ```bash
 ./FPGAs_AdaptiveSoCs_Unified_2024.1_0522_2023_Lin64.bin -- -a XilinxEULA,3rdPartyEULA -b Install  -c /root/.Xilinx/install_config.txt
 
@@ -101,6 +113,7 @@ source /home/<username>/tools/Xilinx/Vivado/2024.1/settings64.sh
 vivado # run vivado
 ```
 - If you can successfully see the vivado, Let's add source scirpt to `.bashrc`.
+
 ```bash
 cd ~ # move to home directory
 vim .bashrc
